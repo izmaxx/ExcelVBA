@@ -64,6 +64,7 @@
     <Compile Include="VBGrammarLexer.cs" />
     <Compile Include="VBGrammarListener.cs" />
     <Compile Include="VBGrammarParser.cs" />
+    <Compile Include="Z3test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -72,6 +73,7 @@
     <None Include="ArrayInit1.g4" />
     <None Include="VBGrammar.g4" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
