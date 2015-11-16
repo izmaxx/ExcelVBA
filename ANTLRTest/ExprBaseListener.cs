@@ -45,29 +45,101 @@ public partial class ExprBaseListener : IExprListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitProg([NotNull] ExprParser.ProgContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ExprParser.stat"/>.
+	/// Enter a parse tree produced by <see cref="ExprParser.printExpr"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterStat([NotNull] ExprParser.StatContext context) { }
+	public virtual void EnterPrintExpr([NotNull] ExprParser.PrintExprContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ExprParser.stat"/>.
+	/// Exit a parse tree produced by <see cref="ExprParser.printExpr"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitStat([NotNull] ExprParser.StatContext context) { }
+	public virtual void ExitPrintExpr([NotNull] ExprParser.PrintExprContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ExprParser.expr"/>.
+	/// Enter a parse tree produced by <see cref="ExprParser.assign"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterExpr([NotNull] ExprParser.ExprContext context) { }
+	public virtual void EnterAssign([NotNull] ExprParser.AssignContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ExprParser.expr"/>.
+	/// Exit a parse tree produced by <see cref="ExprParser.assign"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitExpr([NotNull] ExprParser.ExprContext context) { }
+	public virtual void ExitAssign([NotNull] ExprParser.AssignContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ExprParser.blank"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterBlank([NotNull] ExprParser.BlankContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ExprParser.blank"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitBlank([NotNull] ExprParser.BlankContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ExprParser.parens"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterParens([NotNull] ExprParser.ParensContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ExprParser.parens"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitParens([NotNull] ExprParser.ParensContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ExprParser.MulDiv"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterMulDiv([NotNull] ExprParser.MulDivContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ExprParser.MulDiv"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitMulDiv([NotNull] ExprParser.MulDivContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ExprParser.AddSub"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterAddSub([NotNull] ExprParser.AddSubContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ExprParser.AddSub"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitAddSub([NotNull] ExprParser.AddSubContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ExprParser.id"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterId([NotNull] ExprParser.IdContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ExprParser.id"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitId([NotNull] ExprParser.IdContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ExprParser.@int"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterInt([NotNull] ExprParser.IntContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ExprParser.@int"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitInt([NotNull] ExprParser.IntContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

@@ -31,7 +31,7 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 [System.CLSCompliant(false)]
 public partial class ExprParser : Parser {
 	public const int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, ID=8, INT=9, NEWLINE=10, 
+		T__0=1, T__1=2, T__2=3, MUL=4, DIV=5, ADD=6, SUB=7, ID=8, INT=9, NEWLINE=10, 
 		WS=11;
 	public const int
 		RULE_prog = 0, RULE_stat = 1, RULE_expr = 2;
@@ -40,10 +40,10 @@ public partial class ExprParser : Parser {
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'='", "'*'", "'/'", "'+'", "'-'", "'('", "')'"
+		null, "'='", "'('", "')'", "'*'", "'/'", "'+'", "'-'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, null, null, null, null, null, null, "ID", "INT", "NEWLINE", 
+		null, null, null, null, "MUL", "DIV", "ADD", "SUB", "ID", "INT", "NEWLINE", 
 		"WS"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
@@ -110,7 +110,7 @@ public partial class ExprParser : Parser {
 				State = 9;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.La(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__5) | (1L << ID) | (1L << INT) | (1L << NEWLINE))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << ID) | (1L << INT) | (1L << NEWLINE))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -125,23 +125,58 @@ public partial class ExprParser : Parser {
 	}
 
 	public partial class StatContext : ParserRuleContext {
-		public ExprContext expr() {
-			return GetRuleContext<ExprContext>(0);
-		}
-		public ITerminalNode NEWLINE() { return GetToken(ExprParser.NEWLINE, 0); }
-		public ITerminalNode ID() { return GetToken(ExprParser.ID, 0); }
 		public StatContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
 		public override int RuleIndex { get { return RULE_stat; } }
+	 
+		public StatContext() { }
+		public virtual void CopyFrom(StatContext context) {
+			base.CopyFrom(context);
+		}
+	}
+	public partial class BlankContext : StatContext {
+		public ITerminalNode NEWLINE() { return GetToken(ExprParser.NEWLINE, 0); }
+		public BlankContext(StatContext context) { CopyFrom(context); }
 		public override void EnterRule(IParseTreeListener listener) {
 			IExprListener typedListener = listener as IExprListener;
-			if (typedListener != null) typedListener.EnterStat(this);
+			if (typedListener != null) typedListener.EnterBlank(this);
 		}
 		public override void ExitRule(IParseTreeListener listener) {
 			IExprListener typedListener = listener as IExprListener;
-			if (typedListener != null) typedListener.ExitStat(this);
+			if (typedListener != null) typedListener.ExitBlank(this);
+		}
+	}
+	public partial class PrintExprContext : StatContext {
+		public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		public ITerminalNode NEWLINE() { return GetToken(ExprParser.NEWLINE, 0); }
+		public PrintExprContext(StatContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.EnterPrintExpr(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.ExitPrintExpr(this);
+		}
+	}
+	public partial class AssignContext : StatContext {
+		public ITerminalNode ID() { return GetToken(ExprParser.ID, 0); }
+		public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		public ITerminalNode NEWLINE() { return GetToken(ExprParser.NEWLINE, 0); }
+		public AssignContext(StatContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.EnterAssign(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.ExitAssign(this);
 		}
 	}
 
@@ -153,6 +188,7 @@ public partial class ExprParser : Parser {
 			State = 20;
 			switch ( Interpreter.AdaptivePredict(TokenStream,1,Context) ) {
 			case 1:
+				_localctx = new PrintExprContext(_localctx);
 				EnterOuterAlt(_localctx, 1);
 				{
 				State = 11; expr(0);
@@ -160,6 +196,7 @@ public partial class ExprParser : Parser {
 				}
 				break;
 			case 2:
+				_localctx = new AssignContext(_localctx);
 				EnterOuterAlt(_localctx, 2);
 				{
 				State = 14; Match(ID);
@@ -169,6 +206,7 @@ public partial class ExprParser : Parser {
 				}
 				break;
 			case 3:
+				_localctx = new BlankContext(_localctx);
 				EnterOuterAlt(_localctx, 3);
 				{
 				State = 19; Match(NEWLINE);
@@ -188,26 +226,87 @@ public partial class ExprParser : Parser {
 	}
 
 	public partial class ExprContext : ParserRuleContext {
-		public ITerminalNode INT() { return GetToken(ExprParser.INT, 0); }
-		public ITerminalNode ID() { return GetToken(ExprParser.ID, 0); }
+		public ExprContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_expr; } }
+	 
+		public ExprContext() { }
+		public virtual void CopyFrom(ExprContext context) {
+			base.CopyFrom(context);
+		}
+	}
+	public partial class ParensContext : ExprContext {
+		public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		public ParensContext(ExprContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.EnterParens(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.ExitParens(this);
+		}
+	}
+	public partial class MulDivContext : ExprContext {
 		public ExprContext[] expr() {
 			return GetRuleContexts<ExprContext>();
 		}
 		public ExprContext expr(int i) {
 			return GetRuleContext<ExprContext>(i);
 		}
-		public ExprContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_expr; } }
+		public MulDivContext(ExprContext context) { CopyFrom(context); }
 		public override void EnterRule(IParseTreeListener listener) {
 			IExprListener typedListener = listener as IExprListener;
-			if (typedListener != null) typedListener.EnterExpr(this);
+			if (typedListener != null) typedListener.EnterMulDiv(this);
 		}
 		public override void ExitRule(IParseTreeListener listener) {
 			IExprListener typedListener = listener as IExprListener;
-			if (typedListener != null) typedListener.ExitExpr(this);
+			if (typedListener != null) typedListener.ExitMulDiv(this);
+		}
+	}
+	public partial class AddSubContext : ExprContext {
+		public ExprContext[] expr() {
+			return GetRuleContexts<ExprContext>();
+		}
+		public ExprContext expr(int i) {
+			return GetRuleContext<ExprContext>(i);
+		}
+		public AddSubContext(ExprContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.EnterAddSub(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.ExitAddSub(this);
+		}
+	}
+	public partial class IdContext : ExprContext {
+		public ITerminalNode ID() { return GetToken(ExprParser.ID, 0); }
+		public IdContext(ExprContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.EnterId(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.ExitId(this);
+		}
+	}
+	public partial class IntContext : ExprContext {
+		public ITerminalNode INT() { return GetToken(ExprParser.INT, 0); }
+		public IntContext(ExprContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.EnterInt(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IExprListener typedListener = listener as IExprListener;
+			if (typedListener != null) typedListener.ExitInt(this);
 		}
 	}
 
@@ -232,19 +331,29 @@ public partial class ExprParser : Parser {
 			switch (TokenStream.La(1)) {
 			case INT:
 				{
+				_localctx = new IntContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+
 				State = 23; Match(INT);
 				}
 				break;
 			case ID:
 				{
+				_localctx = new IdContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
 				State = 24; Match(ID);
 				}
 				break;
-			case T__5:
+			case T__1:
 				{
-				State = 25; Match(T__5);
+				_localctx = new ParensContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 25; Match(T__1);
 				State = 26; expr(0);
-				State = 27; Match(T__6);
+				State = 27; Match(T__2);
 				}
 				break;
 			default:
@@ -264,13 +373,13 @@ public partial class ExprParser : Parser {
 					switch ( Interpreter.AdaptivePredict(TokenStream,3,Context) ) {
 					case 1:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new MulDivContext(new ExprContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expr);
 						State = 31;
 						if (!(Precpred(Context, 5))) throw new FailedPredicateException(this, "Precpred(Context, 5)");
 						State = 32;
 						_la = TokenStream.La(1);
-						if ( !(_la==T__1 || _la==T__2) ) {
+						if ( !(_la==MUL || _la==DIV) ) {
 						ErrorHandler.RecoverInline(this);
 						}
 						else {
@@ -281,13 +390,13 @@ public partial class ExprParser : Parser {
 						break;
 					case 2:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new AddSubContext(new ExprContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expr);
 						State = 34;
 						if (!(Precpred(Context, 4))) throw new FailedPredicateException(this, "Precpred(Context, 4)");
 						State = 35;
 						_la = TokenStream.La(1);
-						if ( !(_la==T__3 || _la==T__4) ) {
+						if ( !(_la==ADD || _la==SUB) ) {
 						ErrorHandler.RecoverInline(this);
 						}
 						else {
@@ -336,14 +445,14 @@ public partial class ExprParser : Parser {
 		"\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x5\x3\x17\n\x3\x3\x4\x3\x4\x3\x4"+
 		"\x3\x4\x3\x4\x3\x4\x3\x4\x5\x4 \n\x4\x3\x4\x3\x4\x3\x4\x3\x4\x3\x4\x3"+
 		"\x4\a\x4(\n\x4\f\x4\xE\x4+\v\x4\x3\x4\x2\x3\x6\x5\x2\x4\x6\x2\x4\x3\x2"+
-		"\x4\x5\x3\x2\x6\a\x30\x2\t\x3\x2\x2\x2\x4\x16\x3\x2\x2\x2\x6\x1F\x3\x2"+
-		"\x2\x2\b\n\x5\x4\x3\x2\t\b\x3\x2\x2\x2\n\v\x3\x2\x2\x2\v\t\x3\x2\x2\x2"+
-		"\v\f\x3\x2\x2\x2\f\x3\x3\x2\x2\x2\r\xE\x5\x6\x4\x2\xE\xF\a\f\x2\x2\xF"+
-		"\x17\x3\x2\x2\x2\x10\x11\a\n\x2\x2\x11\x12\a\x3\x2\x2\x12\x13\x5\x6\x4"+
-		"\x2\x13\x14\a\f\x2\x2\x14\x17\x3\x2\x2\x2\x15\x17\a\f\x2\x2\x16\r\x3\x2"+
-		"\x2\x2\x16\x10\x3\x2\x2\x2\x16\x15\x3\x2\x2\x2\x17\x5\x3\x2\x2\x2\x18"+
-		"\x19\b\x4\x1\x2\x19 \a\v\x2\x2\x1A \a\n\x2\x2\x1B\x1C\a\b\x2\x2\x1C\x1D"+
-		"\x5\x6\x4\x2\x1D\x1E\a\t\x2\x2\x1E \x3\x2\x2\x2\x1F\x18\x3\x2\x2\x2\x1F"+
+		"\x6\a\x3\x2\b\t\x30\x2\t\x3\x2\x2\x2\x4\x16\x3\x2\x2\x2\x6\x1F\x3\x2\x2"+
+		"\x2\b\n\x5\x4\x3\x2\t\b\x3\x2\x2\x2\n\v\x3\x2\x2\x2\v\t\x3\x2\x2\x2\v"+
+		"\f\x3\x2\x2\x2\f\x3\x3\x2\x2\x2\r\xE\x5\x6\x4\x2\xE\xF\a\f\x2\x2\xF\x17"+
+		"\x3\x2\x2\x2\x10\x11\a\n\x2\x2\x11\x12\a\x3\x2\x2\x12\x13\x5\x6\x4\x2"+
+		"\x13\x14\a\f\x2\x2\x14\x17\x3\x2\x2\x2\x15\x17\a\f\x2\x2\x16\r\x3\x2\x2"+
+		"\x2\x16\x10\x3\x2\x2\x2\x16\x15\x3\x2\x2\x2\x17\x5\x3\x2\x2\x2\x18\x19"+
+		"\b\x4\x1\x2\x19 \a\v\x2\x2\x1A \a\n\x2\x2\x1B\x1C\a\x4\x2\x2\x1C\x1D\x5"+
+		"\x6\x4\x2\x1D\x1E\a\x5\x2\x2\x1E \x3\x2\x2\x2\x1F\x18\x3\x2\x2\x2\x1F"+
 		"\x1A\x3\x2\x2\x2\x1F\x1B\x3\x2\x2\x2 )\x3\x2\x2\x2!\"\f\a\x2\x2\"#\t\x2"+
 		"\x2\x2#(\x5\x6\x4\b$%\f\x6\x2\x2%&\t\x3\x2\x2&(\x5\x6\x4\a\'!\x3\x2\x2"+
 		"\x2\'$\x3\x2\x2\x2(+\x3\x2\x2\x2)\'\x3\x2\x2\x2)*\x3\x2\x2\x2*\a\x3\x2"+

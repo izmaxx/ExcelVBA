@@ -13,16 +13,21 @@ namespace ANTLRTest
     {
         static void Main(string[] args)
         {
-            Stream inputStream = Console.OpenStandardInput();
-            //AntlrInputStream input = new AntlrInputStream(inputStream);
-            AntlrInputStream input = new AntlrInputStream("{1,2}");
-            ArrayInit1Lexer lexer = new ArrayInit1Lexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            ArrayInit1Parser parser = new ArrayInit1Parser(tokens);
+            FileStream fileStream = new FileStream(@"c:\example1.txt", FileMode.Open, FileAccess.Read);
 
-            IParseTree tree = parser.init(); // begin parsing at init rule
+            Stream inputStream = Console.OpenStandardInput();
+            AntlrInputStream input = new AntlrInputStream(fileStream);
+            //AntlrInputStream input = new AntlrInputStream("{1,2}");
+            VBGrammarLexer lexer = new VBGrammarLexer(input);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            VBGrammarParser parser = new VBGrammarParser(tokens);
+
+            IParseTree tree = parser.startRule(); // begin parsing at init rule
             Console.WriteLine(tree.ToStringTree(parser));
-            
+
+           Antlr4.Runtime.Misc.Utils.TE
+           // LabeledExprVisitor eval = new LabeledExprVisitor();
+           // eval.Visit(tree);
 
             //parser.addSubExpr();
         }

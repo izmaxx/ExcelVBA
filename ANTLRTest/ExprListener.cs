@@ -39,23 +39,99 @@ public interface IExprListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitProg([NotNull] ExprParser.ProgContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ExprParser.stat"/>.
+	/// Enter a parse tree produced by the <c>printExpr</c>
+	/// labeled alternative in <see cref="ExprParser.stat"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterStat([NotNull] ExprParser.StatContext context);
+	void EnterPrintExpr([NotNull] ExprParser.PrintExprContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ExprParser.stat"/>.
+	/// Exit a parse tree produced by the <c>printExpr</c>
+	/// labeled alternative in <see cref="ExprParser.stat"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitStat([NotNull] ExprParser.StatContext context);
+	void ExitPrintExpr([NotNull] ExprParser.PrintExprContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ExprParser.expr"/>.
+	/// Enter a parse tree produced by the <c>assign</c>
+	/// labeled alternative in <see cref="ExprParser.stat"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterExpr([NotNull] ExprParser.ExprContext context);
+	void EnterAssign([NotNull] ExprParser.AssignContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ExprParser.expr"/>.
+	/// Exit a parse tree produced by the <c>assign</c>
+	/// labeled alternative in <see cref="ExprParser.stat"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitExpr([NotNull] ExprParser.ExprContext context);
+	void ExitAssign([NotNull] ExprParser.AssignContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>blank</c>
+	/// labeled alternative in <see cref="ExprParser.stat"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterBlank([NotNull] ExprParser.BlankContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>blank</c>
+	/// labeled alternative in <see cref="ExprParser.stat"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitBlank([NotNull] ExprParser.BlankContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>parens</c>
+	/// labeled alternative in <see cref="ExprParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterParens([NotNull] ExprParser.ParensContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>parens</c>
+	/// labeled alternative in <see cref="ExprParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitParens([NotNull] ExprParser.ParensContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>MulDiv</c>
+	/// labeled alternative in <see cref="ExprParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterMulDiv([NotNull] ExprParser.MulDivContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>MulDiv</c>
+	/// labeled alternative in <see cref="ExprParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitMulDiv([NotNull] ExprParser.MulDivContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>AddSub</c>
+	/// labeled alternative in <see cref="ExprParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAddSub([NotNull] ExprParser.AddSubContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>AddSub</c>
+	/// labeled alternative in <see cref="ExprParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAddSub([NotNull] ExprParser.AddSubContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>id</c>
+	/// labeled alternative in <see cref="ExprParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterId([NotNull] ExprParser.IdContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>id</c>
+	/// labeled alternative in <see cref="ExprParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitId([NotNull] ExprParser.IdContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>int</c>
+	/// labeled alternative in <see cref="ExprParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInt([NotNull] ExprParser.IntContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>int</c>
+	/// labeled alternative in <see cref="ExprParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInt([NotNull] ExprParser.IntContext context);
 }
