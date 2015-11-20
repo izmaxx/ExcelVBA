@@ -47,17 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayInit1BaseListener.cs" />
-    <Compile Include="ArrayInit1Lexer.cs" />
-    <Compile Include="ArrayInit1Listener.cs" />
-    <Compile Include="ArrayInit1Parser.cs" />
-    <Compile Include="ExprBaseListener.cs" />
-    <Compile Include="ExprBaseVisitor.cs" />
-    <Compile Include="ExprLexer.cs" />
-    <Compile Include="ExprListener.cs" />
-    <Compile Include="ExprParser.cs" />
-    <Compile Include="ExprVisitor.cs" />
+    <Compile Include="BinaryTree.cs" />
+    <Compile Include="BinaryTreeNode.cs" />
+    <Compile Include="Interface1.cs" />
     <Compile Include="LabeledExprVisitor.cs" />
+    <Compile Include="Node.cs" />
+    <Compile Include="NodeList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VBGrammarBaseListener.cs" />
@@ -68,9 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Expr.g4" />
-    <None Include="ArrayInit.g4" />
-    <None Include="ArrayInit1.g4" />
     <None Include="VBGrammar.g4" />
   </ItemGroup>
   <ItemGroup />
